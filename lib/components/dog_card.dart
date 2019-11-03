@@ -18,14 +18,17 @@ class _DogCardState extends State<DogCard> {
   _DogCardState(this.dog);
 
   Widget get dogImage {
-    var dogAvatar = Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(renderUrl ?? ''),
+    var dogAvatar = Hero(
+      tag: dog,
+      child: Container(
+        width: 100.0,
+        height: 100.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(renderUrl ?? ''),
+          ),
         ),
       ),
     );

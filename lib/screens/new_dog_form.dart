@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:we_rate_dogs_app/models/dog.dart';
 
 class AddDogFormPage extends StatefulWidget {
   @override
@@ -6,6 +7,20 @@ class AddDogFormPage extends StatefulWidget {
 }
 
 class _AddDogFormPageState extends State<AddDogFormPage> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  void submitPup(BuildContext context) {
+    if (nameController.text.isEmpty) {
+      print('Dogs need names!');
+    } else {
+      var newDog = Dog(nameController.text, locationController.text,
+          descriptionController.text);
+      Navigator.of(context).pop(newDog);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,20 +35,24 @@ class _AddDogFormPageState extends State<AddDogFormPage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Name the pup',
-                ),
+                controller: nameController,
+                onChanged: (v) => nameController.text = v,
+                decoration: InputDecoration(labelText: 'Name the pup'),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: TextField(
+                controller: locationController,
+                onChanged: (v) => locationController.text = v,
                 decoration: InputDecoration(labelText: 'Pup\' location'),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: TextField(
+                controller: descriptionController,
+                onChanged: (v) => descriptionController.text = v,
                 decoration: InputDecoration(labelText: 'All about the pup'),
               ),
             ),
@@ -42,7 +61,7 @@ class _AddDogFormPageState extends State<AddDogFormPage> {
               child: Builder(
                 builder: (BuildContext context) {
                   return RaisedButton(
-                    onPressed: () => print('PRESSED'),
+                    onPressed: () => submitPup(context),
                     color: Colors.indigoAccent,
                     child: Text('Submit pup'),
                   );

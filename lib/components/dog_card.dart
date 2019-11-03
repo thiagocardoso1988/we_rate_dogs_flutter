@@ -18,18 +18,46 @@ class _DogCardState extends State<DogCard> {
   _DogCardState(this.dog);
 
   Widget get dogImage {
-    final String fallbackPic =
-        'https://images.dog.ceo/breeds/mountain-bernese/n02107683_698.jpg';
-    return Container(
+    var dogAvatar = Container(
       width: 100.0,
       height: 100.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(renderUrl ?? fallbackPic),
+          image: NetworkImage(renderUrl ?? ''),
         ),
       ),
+    );
+
+    var placeholder = Container(
+      width: 100.0,
+      height: 100.0,
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.black54,
+              Colors.black,
+              Colors.blueGrey[600],
+            ],
+          )),
+      alignment: Alignment.center,
+      child: Text(
+        'DOGGO',
+        textAlign: TextAlign.center,
+      ),
+    );
+
+    return AnimatedCrossFade(
+      firstChild: placeholder,
+      secondChild: dogAvatar,
+      crossFadeState: renderUrl == null
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
+      duration: Duration(milliseconds: 1000),
     );
   }
 
